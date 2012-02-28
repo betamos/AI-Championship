@@ -2,68 +2,31 @@ var canvas, ctx;
 var conf = {
   width: 500,
   height: 400,
-  earthRadius: 100,
-  moonRadius: 30,
-  moonReduceRadius: 5, // How much the radius should be reduced on full speed
-  moonDistance: 200,
-  moonSpeed: 0.0005,
-  moonMaxSpeed: 0.006,
-  moonMinSpeed: 0.0005,
-  moonAcceleration: 0.0006,
-  moonRetardation: 0.00045,
-  podSize: 10,
-  podMaxSpeed: 0.1,
-  pieCount: 10,
-  podColor: '#00FFFF',
-  asteroidRadius: 10,
-  asteroidSpeed: 0.00005,
-  asteroidGenerationInterval: 2000,
-  incrementLevelInterval: 30000, // 30 sec
-  moonMaxContraction: 0 // How much the moon closes in on the earth at max speed
+  ball: {
+    radius: 5,
+    color: 'grey',
+    speed: 0.2,
+    friction: 0.02
+  },
+  player: {
+    radius: 10,
+    color: 'red',
+    speed: 2
+  }
 };
-var pushed = false;
-var score = 0;
 
 window.addEventListener('DOMContentLoaded', function(e) {
 
   console.log('running game…');
 
-  conf.width = window.innerWidth;
-  conf.height = window.innerHeight;
-
   canvas = document.getElementById('game');
   canvas.width = conf.width;
   canvas.height = conf.height;
   
-  canvas.contains = function (circle) {
-    if (circle.position.x < -100)
-    {
-      return false;
-    }
-    if (circle.position.y < -100)
-    {
-      return false;
-    }
-    if (circle.position.x > canvas.width+100)
-    {
-      return false;
-    }
-    if (circle.position.y > canvas.height+100)
-    {
-      return false;
-    }
-    return true;
-  };
   
   ctx = canvas.getContext('2d');
   init();
 
-  window.addEventListener('keydown', function(e) {
-    if (e.keyCode == 32) {
-      pushed = true;
-      window.addEventListener('keyup', keyupHandler);
-    }
-  });
   // usage: 
 // instead of setInterval(render, 16) ....
 
@@ -89,10 +52,3 @@ window.requestAnimFrame = (function(){
             window.setTimeout(callback, 1000 / 60);
           };
 })();
-
-var keyupHandler = function(e) {
-  if (e.keyCode == 32) {
-    pushed = false;
-    window.removeEventListener('keyup', keyupHandler);
-  }
-};

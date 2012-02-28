@@ -48,11 +48,15 @@ Vector.prototype.scale = function(factor, clone) {
 // Returns a normalizaded vector
 Vector.prototype.norm = function(clone) {
   var v = clone ? this.clone() : this;
-  var normLen =  Math.sqrt(Math.pow(this.x, 2)+Math.pow(this.y, 2));
+  var normLen = this.length()
   v.x = v.x/normLen;
   v.y = v.y/normLen;
   return v;
 };
+
+Vector.prototype.length = function() {
+  return Math.sqrt(Math.pow(this.x, 2)+Math.pow(this.y, 2));
+}
 
 Vector.prototype.rotate = function(angle, clone) {
   var v = clone ? this.clone() : this
