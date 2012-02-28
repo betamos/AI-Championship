@@ -59,7 +59,7 @@ Ball.prototype.update = function(delta) {
   }
   else {
     this.velocity = this.player.velocity;
-    this.position = this.player.position;
+    this.position = this.player.position.clone();
   }
   _.each(scene.players, function(player) {
     if (player.wantsBall && player.collide(ball)) {
